@@ -1,0 +1,6 @@
+myenv
+myenv/
+**myenv/
+*myenv/
+
+~$HKFoods_Hackathon data .xlsx
