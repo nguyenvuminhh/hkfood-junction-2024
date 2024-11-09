@@ -73,11 +73,11 @@ function Stage2() {
       <Toaster position="top-center" reverseOrder={false} />
           <div className="w-[40vw] p-6 space-y-4 md:space-y-6 sm:p-8 rounded-lg dark:shadow-white border sm:max-w-md xl:p-0
           bg-white dark:bg-secondary_login_dark dark:border-gray-700 border-gray-300">
-            <h1 className="text-xl font-semibold leading-tight tracking-tight md:text-2xl text-[#232d42] dark:text-white">
+            <h1 className="mt-4 text-center text-xl font-semibold leading-tight tracking-tight md:text-2xl text-[#232d42] dark:text-white">
               Stage 2
             </h1>
             <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
-            <div>
+            <div className = "ml-4 mr-4">
                 <label htmlFor="batchID" className="block mb-2 text-sm font-medium text-[#232d42] dark:text-white">
                   Batch ID
                 </label>
@@ -93,8 +93,8 @@ function Stage2() {
                   required
                 />
               </div>
-              <div>
-                <label htmlFor="productionTime" className="block mb-2 text-sm font-medium text-[#232d42] dark:text-white">
+              <div className = "ml-4 mr-4">
+              <label htmlFor="productionTime" className="block mb-2 text-sm font-medium text-[#232d42] dark:text-white">
                   Production Time
                 </label>
                 <input
@@ -109,8 +109,8 @@ function Stage2() {
                   required
                 />
               </div>
-              <div>
-                <label htmlFor="weightBeforeCooking" className="block mb-2 text-sm font-medium text-[#232d42] dark:text-white">
+              <div className = "ml-4 mr-4">
+              <label htmlFor="weightBeforeCooking" className="block mb-2 text-sm font-medium text-[#232d42] dark:text-white">
                   Weight After Cooking
                 </label>
                 <input
@@ -127,7 +127,7 @@ function Stage2() {
               </div>
               <button
                 type="submit"
-                className="w-full focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 text-center
+                className="w-full focus:ring-4 font-medium rounded-b-lg text-sm px-5 py-2.5 text-center
                 bg-[#232d42]
                 dark:bg-gradient-to-r dark:from-blue-600 dark:to-violet-600 dark:hover:from-blue-800 dark:hover:to-indigo-900 text-white"
                 disabled={loading}

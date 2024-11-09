@@ -1,9 +1,16 @@
 import React from 'react';
 import { FaMoon, FaSun, FaUpload, FaHome } from 'react-icons/fa';
+import { MdOutlineScreenshotMonitor } from "react-icons/md";
+
 
 function TopNavigation({ darkTheme, handleMode }) {
   return (
     <div className="absolute top-10 flex gap-5 right-20">
+      <button
+        onClick={() => (window.location.href = '/monitor')}
+      >
+        <MdOutlineScreenshotMonitor size="2.1em" className="top-navigation-icon text-slate-400" />
+      </button>
       <button
         onClick={() => (window.location.href = '/')}
       >
