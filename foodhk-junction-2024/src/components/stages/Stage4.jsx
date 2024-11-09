@@ -68,7 +68,8 @@ function Stage4() {
       <Helmet>
         <title>Stage 4</title>
       </Helmet>
-      <Toaster position="top-center" reverseOrder={false} />
+      <Toaster position="top-center pb-10" reverseOrder={false} />
+      <div className = "h-dvh">
           <div className="w-[40vw] p-6 space-y-4 md:space-y-6 sm:p-8 rounded-lg dark:shadow-white border sm:max-w-md xl:p-0
           bg-white dark:bg-secondary_login_dark dark:border-gray-700 border-gray-300">
             <h1 className="text-center mt-4 text-xl font-semibold leading-tight tracking-tight md:text-2xl text-[#232d42] dark:text-white">
@@ -93,7 +94,7 @@ function Stage4() {
               </div>
               <button
                 type="submit"
-                className="w-full focus:ring-4 font-medium rounded-b-lg text-sm px-5 py-2.5 text-center
+                className="w-full focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 text-center
                 bg-[#232d42]
                 dark:bg-gradient-to-r dark:from-blue-600 dark:to-violet-600 dark:hover:from-blue-800 dark:hover:to-indigo-900 text-white"
                 disabled={loading}
@@ -101,6 +102,7 @@ function Stage4() {
                 {loading ? <span className="loading loading-spinner" /> : 'Submit'}
               </button>
             </form>
+          </div>
           </div>
     </section>
   );

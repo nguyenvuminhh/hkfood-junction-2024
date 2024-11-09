@@ -16,7 +16,7 @@ function MainLayout() {
   return (
     <>
     <TopNavigation darkTheme={darkTheme} handleMode={handleMode} />
-    <div className="h-dvh dark:bg-primary_login_dark bg-white flex flex-col items-center">
+    <div className="dark:bg-primary_login_dark bg-white flex flex-col items-center">
       <ProgressBar />
       {progress === 1 && <Stage1 />}
       {progress === 2 && <Stage2 />}
