@@ -4,3 +4,8 @@ myenv/
 *myenv/
 
 ~$HKFoods_Hackathon data .xlsx
+**node_modules
+*node_modules
+
+**.env
+*.env
