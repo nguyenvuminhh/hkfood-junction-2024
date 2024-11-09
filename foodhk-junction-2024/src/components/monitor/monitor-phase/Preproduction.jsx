@@ -1,7 +1,7 @@
-import PreproductionGraph from './graphs/PreproductionGraph';
-import PreproductionNotification from './notifications/PreproductionNotifications';
-import TopNavigation from '../main pages/TopNavigation';
-import useDarkMode from '../../hooks/useDarkMode';
+import PreproductionGraph from '../graphs/PreproductionGraph';
+import PreproductionNotification from '../notifications/PreproductionNotifications';
+import TopNavigation from '../../main pages/TopNavigation';
+import useDarkMode from '../../../hooks/useDarkMode';
 import { Helmet } from 'react-helmet';
 import { useSelector } from 'react-redux';
 

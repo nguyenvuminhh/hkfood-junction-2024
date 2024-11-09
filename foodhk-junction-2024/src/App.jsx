@@ -2,7 +2,8 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ProductForm from "./components/product/ProductForm";
 import MainLayout from './components/main pages/MainLayout'; // Import MainLayout
-import Preproduction from "./components/monitor/Preproduction";
+import MainMonitor from "./components/monitor/MainMonitor";
+import Preproduction from "./components/monitor/monitor-phase/Preproduction";
 import { ProgressProvider, useProgress } from './context/ProgressContext';
 
 function AppContent() {
@@ -11,7 +12,8 @@ function AppContent() {
       <Routes>
         <Route path="/" element={<MainLayout />} />
         <Route path="/product-form" element={<ProductForm />} />
-        <Route path="/monitor" element={<Preproduction />} />
+        <Route path="/monitor" element={<MainMonitor />} />
+        <Route path="/monitor/1" element={<Preproduction />} />
       </Routes>
     </Router>
   );
