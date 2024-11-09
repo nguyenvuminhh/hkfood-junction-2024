@@ -26,6 +26,7 @@ function Stage1() {
     setLoading(true);
     try {      
       const response = await batchService.postPreprocess(prodId, batchId, productionTime, weightBeforeCooking);
+      console.log(response);
   
       if (response.error) {
         toast.error(response.error);

@@ -27,7 +27,8 @@ function Stage3() {
   
     setLoading(true);
     try {      
-      const response = await batchService.postCooking(batchId, batchDate, weightAfterStorage, storageEnd);
+      const response = await batchService.postStorage(batchId, batchDate, weightAfterStorage, storageEnd);
+      console.log(response);
   
       if (response.error) {
         toast.error(response.error);

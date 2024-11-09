@@ -27,6 +27,7 @@ function Stage2() {
     setLoading(true);
     try {      
       const response = await batchService.postCooking(batchId, batchDate, weightAfterCooking, storageStart);
+      console.log(response);
   
       if (response.error) {
         toast.error(response.error);
@@ -110,7 +111,7 @@ function Stage2() {
               </div>
               <div className = "ml-4 mr-4">
               <label htmlFor="storageStart" className="block mb-2 text-sm font-medium text-[#232d42] dark:text-white">
-                  Weight After Cooking
+                  Day enter storage
                 </label>
                 <input
                   type="date"
@@ -120,7 +121,7 @@ function Stage2() {
                   onChange={(e) => setStorageStart(e.target.value)}
                   className="border sm:text-sm rounded-lg block w-full p-2.5 bg-white dark:bg-third_login_dark border-[#232d42] dark:border-gray-600
                                     placeholder-gray-400 text-black dark:text-white focus:ring-white focus:border-white"
-                  placeholder="Enter weight after cooking"
+                  placeholder="Enter the day that product enters storage"
                   required
                 />
               </div>
