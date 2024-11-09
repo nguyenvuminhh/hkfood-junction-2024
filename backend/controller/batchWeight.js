@@ -8,6 +8,7 @@ router.post('/:process/', async (req, res) => {
     const process = req.params.process
     const batchIdAndDate= req.params.batchIdAndDate
     const body = req.body
+    console.log(body)
     const batchId = body.batchId
     const batchDate = new Date(body.batchDate)
     if (process == "preprocess") {
@@ -20,6 +21,7 @@ router.post('/:process/', async (req, res) => {
             batchDate,
             weightsBeforeCooking
         })
+        console.log(batch);
         batch.save()
         res.json({
             ok: 'ok'

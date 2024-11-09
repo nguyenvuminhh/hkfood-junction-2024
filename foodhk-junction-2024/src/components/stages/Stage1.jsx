@@ -24,14 +24,8 @@ function Stage1() {
     if (!check) return;
   
     setLoading(true);
-    try {
-      const formData = new FormData();
-      formData.append('batchId', batchId);
-      formData.append('prodId', prodId);
-      formData.append('productionTime', productionTime);
-      formData.append('weightBeforeCooking', weightBeforeCooking);
-      
-      const response = await batchService.postPreprocess(formData);
+    try {      
+      const response = await batchService.postPreprocess(prodId, batchId, productionTime, weightBeforeCooking);
   
       if (response.error) {
         toast.error(response.error);
@@ -53,13 +47,14 @@ function Stage1() {
     }
   };
   
+  
   return (
     <section className="dark:bg-primary_login_dark">
       <Helmet>
         <title>Stage 1</title>
       </Helmet>
       <Toaster position="top-center" reverseOrder={false} />
-        <div className = "basis-2/3">
+        <div className = "basis-2/3 pb-10">
           <div className="w-[40vw] p-6 space-y-4 md:space-y-6 sm:p-8 rounded-lg dark:shadow-white border sm:max-w-md xl:p-0
           bg-white dark:bg-secondary_login_dark dark:border-gray-700 border-gray-300">
             <h1 className="mt-4 text-center text-xl font-semibold leading-tight tracking-tight md:text-2xl text-[#232d42] dark:text-white">
@@ -132,7 +127,7 @@ function Stage1() {
               </div>
               <button
                 type="submit"
-                className="w-full focus:ring-4 font-medium rounded-b-lg text-sm px-5 py-2.5 text-center
+                className="w-full focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 text-center
                 bg-[#232d42]
                 dark:bg-gradient-to-r dark:from-blue-600 dark:to-violet-600 dark:hover:from-blue-800 dark:hover:to-indigo-900 text-white"
                 disabled={loading}
