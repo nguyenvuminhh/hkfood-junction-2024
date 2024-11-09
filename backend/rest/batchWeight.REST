@@ -1,0 +1,28 @@
+### Preprocess Phase Test
+POST http://localhost:3000/api/batchWeight/preprocess/BATCH123|2024-11-09
+Content-Type: application/json
+
+{
+    "weightsBeforeCooking": 1200
+}
+
+### Cooking Phase Test
+POST http://localhost:3000/api/batchWeight/cooking/BATCH123|2024-11-09
+Content-Type: application/json
+
+{
+    "weightsAfterCooking": 1100,
+    "storageStart": "2024-11-09T10:00:00Z"
+}
+
+### Storage Phase Test
+POST http://localhost:3000/api/batchWeight/storage/BATCH123|2024-11-09
+Content-Type: application/json
+
+{
+    "weightsAfterStorage": 1050,
+    "storageEnd": "2024-11-10T10:00:00Z"
+}
+
+### Fetch Batch Details Test
+GET http://localhost:3000/api/batchWeight/BATCH123

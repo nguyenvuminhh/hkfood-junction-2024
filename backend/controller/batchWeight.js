@@ -1,6 +1,7 @@
 const axios = require('axios')
 const BatchWeight = require('../models/batchWeight')
 const Product = require('../models/product')
+const Notification = require('../models/notification')
 const router = require('express').Router()
 
 router.post('/:process/:batchIdAndDate', async (req, res) => {
@@ -40,7 +41,16 @@ router.post('/:process/:batchIdAndDate', async (req, res) => {
         let abnormal = false
         if (weightLossDuringCooking < product.lowerCookingLossBound || weightLossDuringCooking > product.upperCookingLossBound) {
             abnormal = true
+            const notification = new Notification({
+                batchId,
+                batchDate,
+                phase: 2,
+                statistic: weightLossDuringCooking
+            })
+            notification.save()
         }
+
+        
 
         res.json({
             abnormal,
@@ -70,6 +80,13 @@ router.post('/:process/:batchIdAndDate', async (req, res) => {
         let abnormal = false
         if (weightLossRate < threshold) {
             abnormal = true
+            const notification = new Notification({
+                batchId,
+                batchDate,
+                phase: 3,
+                statistic: weightLossRate
+            })
+            notification.save()
         }
 
         res.json({
@@ -78,3 +95,18 @@ router.post('/:process/:batchIdAndDate', async (req, res) => {
         })
     }
 })
+
+router.get('/:batchId', async (req, res) => {
+    try {
+        const batchId = req.params.batchId;
+        const batch = await BatchWeight.findOne({ batchId });
+        if (!batch) {
+            return res.status(404).json({ error: 'Batch not found' });
+        }
+        res.json(batch);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+module.exports = router

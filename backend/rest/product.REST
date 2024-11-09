@@ -1,0 +1,20 @@
+### Post Product Weight Check
+POST http://localhost:3000/api/productWeight/BATCH123
+Content-Type: application/json
+
+{
+    "weight": 1200
+}
+
+### Upload CSV and Calculate Percentiles
+POST http://localhost:3000/api/productWeight/new
+Content-Type: multipart/form-data
+
+{ 
+    "prodId": "PROD123",
+    "prodName": "Product A",
+    "targetWeight": 100
+}
+
+### Fetch All Batches
+GET http://localhost:3000/api/productWeight/all

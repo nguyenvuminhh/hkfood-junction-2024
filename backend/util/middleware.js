@@ -1,6 +1,3 @@
-const jwt = require('jsonwebtoken')
-const { JWT_SECRET } = require('../util/config')
-const User = require('../models/user')
 
 const requestLogger = (req, res, next) => {
     console.log('-----------------------')
@@ -23,29 +20,5 @@ const errorHandler = (error, req, res, next) => {
     next(error)
 }
 
-const tokenExtractor = async (req, res, next) => {
-    const auth = req.headers.authorization
-    if (!auth || !auth.startsWith('Bearer ')) {
-        throw Error('Status 401 | Authorization failed')
-    }
-    req.token = auth.substring(7)
-    next()
-}
 
-const currentUserExtractor = async (req, res, next) => {
-    const decodedToken = await jwt.verify(req.token, JWT_SECRET)
-    const user = await User.findById(decodedToken.id)
-    if (!user) {
-        throw Error('Status 401 | Authorization failed')
-    }
-    req.currentUser = {
-        id: user._id,
-        username: user.username,
-        name: user.name,
-    }
-
-    next()
-}
-
-
-module.exports = { errorHandler, tokenExtractor, currentUserExtractor, requestLogger }
+module.exports = { errorHandler, requestLogger }
