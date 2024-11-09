@@ -72,28 +72,30 @@ router.post('/:process/', async (req, res) => {
             },
             { new: true }
         )
+        console.log("aaaaaa", (storageEnd - new Date(batch.storageStart)))
+        
         const storageTime = (storageEnd - new Date(batch.storageStart)) / (1000 * 60 * 60 * 24)
         const lossRatePerDay = 99/100
 
         const idealWeightAfterStorage = batch.weightAfterCooking * Math.pow(lossRatePerDay, storageTime)
-        const weightLossRate = (weightAfterStorage - idealWeightAfterStorage) / idealWeightAfterStorage
+        const weightLossDeviationRate = (weightAfterStorage - idealWeightAfterStorage) / idealWeightAfterStorage
         const threshold = 1/100
 
         let abnormal = false
-        if (weightLossRate < threshold) {
+        if (weightLossDeviationRate < threshold) {
             abnormal = true
             const notification = new Notification({
                 batchId,
                 batchDate,
                 phase: 3,
-                statistic: weightLossRate
+                statistic: weightLossDeviationRate
             })
             notification.save()
         }
 
         res.json({
             abnormal,
-            weightLossRate
+            weightLossDeviationRate
         })
     }
 })
