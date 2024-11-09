@@ -17,8 +17,12 @@ const { errorHandler, requestLogger } = require('./util/middleware')
 
 // mongoose
 mongoose.set('strictQuery', false)
-mongoose.connect(MONGOOSE_URL)
-
+mongoose.connect(MONGOOSE_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 5000
+  });
+  
 // middleware and routes
 app.use(express.json())
 app.use(cors())
