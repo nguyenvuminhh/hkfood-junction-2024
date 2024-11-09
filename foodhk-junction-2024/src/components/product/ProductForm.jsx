@@ -6,38 +6,43 @@ import useDarkMode from '../../hooks/useDarkMode';
 import productService from '../../services/productService';
 
 function ProductForm() {
-  const [productID, setProductID] = useState('');
+  const [prodId, setProdId] = useState('');
+  const [prodName, setProdName] = useState('');
   const [targetWeight, setTargetWeight] = useState('');
   const [csvFile, setCSVFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [darkTheme, setDarkTheme] = useDarkMode();
   const handleMode = () => setDarkTheme(!darkTheme);
 
-  function handleInputErrors() {
-    if (!productID || !targetWeight || !csvFile) {
+  const handleInputErrors = () => {
+    if (!prodId || !targetWeight || !csvFile) {
       toast.error('Please fill in all fields');
       return false;
     }
     return true;
-  }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     if (!handleInputErrors()) return;
-  
+
     setLoading(true);
     try {
       const formData = new FormData();
-      formData.append('productID', productID);
-      formData.append('targetWeight', targetWeight);
-      formData.append('csvFile', csvFile);
+      formData.append('prodId', prodId);
+      formData.append('prodName', prodName);
+      formData.append('targetWeight', parseFloat(targetWeight)); // Ensure targetWeight is a number
+      formData.append('file', csvFile); // Match the server’s expected file name
 
       const response = await productService.newProduct(formData);
 
       if (response.error) {
         toast.error(response.error);
       } else {
+        setProdId('');
+        setProdName('');
+        setCSVFile('');
         toast.success('Form submitted successfully');
       }
     } catch (error) {
@@ -64,19 +69,37 @@ function ProductForm() {
           </h1>
           <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
             <div className="ml-4 mr-4">
-              <label htmlFor="productID" className="block mb-2 text-sm font-medium text-[#232d42] dark:text-white">
+              <label htmlFor="prodId" className="block mb-2 text-sm font-medium text-[#232d42] dark:text-white">
                 Product ID
               </label>
               <input
                 type="text"
-                name="productID"
-                id="productID"
-                value={productID}
-                onChange={(e) => setProductID(e.target.value)}
+                name="prodId"
+                id="prodId"
+                value={prodId}
+                onChange={(e) => setProdId(e.target.value)}
                 className="border sm:text-sm rounded-lg block w-full p-2.5 bg-white dark:bg-third_login_dark border-[#232d42] dark:border-gray-600
                               placeholder-gray-400 text-black dark:text-white focus:ring-white focus:border-white"
                 placeholder="Enter product ID"
                 required
+                disabled={loading}
+              />
+            </div>
+            <div className="ml-4 mr-4">
+              <label htmlFor="prodName" className="block mb-2 text-sm font-medium text-[#232d42] dark:text-white">
+                Product Name
+              </label>
+              <input
+                type="text"
+                name="prodName"
+                id="prodName"
+                value={prodName}
+                onChange={(e) => setProdName(e.target.value)}
+                className="border sm:text-sm rounded-lg block w-full p-2.5 bg-white dark:bg-third_login_dark border-[#232d42] dark:border-gray-600
+                              placeholder-gray-400 text-black dark:text-white focus:ring-white focus:border-white"
+                placeholder="Enter product name"
+                required
+                disabled={loading}
               />
             </div>
             <div className="ml-4 mr-4">
@@ -84,7 +107,7 @@ function ProductForm() {
                 Target Weight
               </label>
               <input
-                type="text"
+                type="number"
                 name="targetWeight"
                 id="targetWeight"
                 value={targetWeight}
@@ -93,6 +116,7 @@ function ProductForm() {
                               placeholder-gray-400 text-black dark:text-white focus:ring-white focus:border-white"
                 placeholder="Enter target weight"
                 required
+                disabled={loading}
               />
             </div>
             <div className="ml-4 mr-4">
@@ -107,6 +131,7 @@ function ProductForm() {
                 className="border sm:text-sm rounded-lg block w-full p-2.5 bg-white dark:bg-third_login_dark border-[#232d42] dark:border-gray-600
                               placeholder-gray-400 text-black dark:text-white focus:ring-white focus:border-white"
                 required
+                disabled={loading}
               />
             </div>
             <button

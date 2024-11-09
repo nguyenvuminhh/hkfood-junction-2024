@@ -13,6 +13,7 @@ const upload = multer()
 router.post("/new", upload.single("file"), async (req, res) => {
     // body = { prodId, prodName, targetWeight }
     console.log("1111111111111111111")
+    console.log(req.body);
     const { prodId, prodName, targetWeight } = req.body;
     const file = req.file;
     console.log(req.body)
