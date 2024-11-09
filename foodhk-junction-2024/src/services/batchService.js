@@ -2,33 +2,33 @@ import axios from 'axios';
 
 const baseUrl = 'http://localhost:3000/api';
 
-const postPreprocess = async (prodId, batchId, batchDate, weightsBeforeCooking) => {
+const postPreprocess = async (prodId, batchId, batchDate, weightBeforeCooking) => {
     const response = await axios.post(`${baseUrl}/batchWeight/preprocess`, {
         prodId,
         batchId,
         batchDate: new Date(batchDate),
-        weightsBeforeCooking,
+        weightBeforeCooking,
     });
     
     return response.data;
 }
 
-const postCooking = async (batchId, batchDate, weightsAfterCooking, storageStart) => {
+const postCooking = async (batchId, batchDate, weightAfterCooking, storageStart) => {
   const response = await axios.post(`${baseUrl}/batchWeight/cooking`, {
     batchId,
     batchDate: new Date(batchDate),
-    weightsAfterCooking,
+    weightAfterCooking,
     storageStart: new Date(storageStart)
   });
 
   return response.data;
 };
-const postStorage = async (batchId, batchDate, weightsAfterStorage, storageEnd) => {
+const postStorage = async (batchId, batchDate, weightAfterStorage, storageEnd) => {
   const response = await axios.post(`${baseUrl}/batchWeight/storage`, {
     batchId,
     batchDate: new Date(batchDate),
-    weightsAfterStorage,
-    storageStart: new Date(storageStart),
+    weightAfterStorage,
+    storageEnd: new Date(storageEnd)
   });
 
   return response.data;

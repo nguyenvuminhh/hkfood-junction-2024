@@ -6,20 +6,19 @@ const router = require('express').Router()
 
 router.post('/:process/', async (req, res) => {
     const process = req.params.process
-    const batchIdAndDate= req.params.batchIdAndDate
     const body = req.body
     console.log(body)
     const batchId = body.batchId
     const batchDate = new Date(body.batchDate)
     if (process == "preprocess") {
         const prodId = body.prodId
-        const weightsBeforeCooking = body.weightsBeforeCooking
+        const weightBeforeCooking = body.weightBeforeCooking
         const batch = new BatchWeight({
             stage: 2,
             prodId,
             batchId,
             batchDate,
-            weightsBeforeCooking
+            weightBeforeCooking
         })
         console.log(batch);
         batch.save()
@@ -27,19 +26,19 @@ router.post('/:process/', async (req, res) => {
             ok: 'ok'
         })
     } else if (process == "cooking") {
-        const weightsAfterCooking = body.weightsAfterCooking
+        const weightAfterCooking = body.weightAfterCooking
         const storageStart = body.storageStart
         const batch = await BatchWeight.findOneAndUpdate({ batchId },                     
             { 
                 $set: { 
                     storageStart,
-                    weightsAfterCooking,    
+                    weightAfterCooking,    
                     stage: 3                 
                 } 
             },
             { new: true }
         )
-        const weightLossDuringCooking = batch.weightsBeforeCooking - weightsAfterCooking
+        const weightLossDuringCooking = batch.weightBeforeCooking - weightAfterCooking
         const product = await Product.findOne({ prodId: batch.prodId })
         let abnormal = false
         if (weightLossDuringCooking < product.lowerCookingLossBound || weightLossDuringCooking > product.upperCookingLossBound) {
@@ -61,13 +60,13 @@ router.post('/:process/', async (req, res) => {
         })
 
     } else if (process == "storage") {
-        const weightsAfterStorage = body.weightsAfterStorage
+        const weightAfterStorage = body.weightAfterStorage
         const storageEnd = new Date(body.storageEnd)
         const batch = await BatchWeight.findOneAndUpdate({ batchId },                     
             { 
                 $set: { 
                     storageEnd,
-                    weightsAfterStorage,    
+                    weightAfterStorage,    
                     stage: 4                 
                 } 
             },
@@ -76,8 +75,8 @@ router.post('/:process/', async (req, res) => {
         const storageTime = (storageEnd - new Date(batch.storageStart)) / (1000 * 60 * 60 * 24)
         const lossRatePerDay = 99/100
 
-        const idealWeightAfterStorage = batch.weightsAfterCooking * Math.pow(lossRatePerDay, storageTime)
-        const weightLossRate = (weightsAfterStorage - idealWeightAfterStorage) / idealWeightAfterStorage
+        const idealWeightAfterStorage = batch.weightAfterCooking * Math.pow(lossRatePerDay, storageTime)
+        const weightLossRate = (weightAfterStorage - idealWeightAfterStorage) / idealWeightAfterStorage
         const threshold = 1/100
 
         let abnormal = false

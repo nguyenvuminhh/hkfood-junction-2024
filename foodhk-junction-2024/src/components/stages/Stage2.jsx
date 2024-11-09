@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { Helmet } from 'react-helmet';
-//import formService from '../../services/authentication';
-
+import batchService from '../../services/batchService';
 function Stage2() {
-  const [batchID, setBatchID] = useState('');
-  const [productionTime, setProductionTime] = useState('');
+  const [batchId, setBatchId] = useState('');
+  const [batchDate, setBatchDate] = useState('');
   const [weightAfterCooking, setWeightAfterCooking] = useState('');
+  const [storageStart, setStorageStart] = useState('');
   const [loading, setLoading] = useState(false);
 
   function handleInputErrors() {
-    if (!productionTime) {
+    if (!batchId || !batchDate || !weightAfterCooking || !storageStart) {
       toast.error('Please fill in all fields');
       return false;
     }
@@ -18,27 +18,22 @@ function Stage2() {
     return true;
   }
 
-  /*const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
   
     const check = handleInputErrors();
     if (!check) return;
   
     setLoading(true);
-    try {
-      const formData = new FormData();
-      formData.append('finalWeight', finalWeight);
-      formData.append('beginStorage', beginStorage);
-      formData.append('endStorage', endStorage);
-      
-      //const response = await formService.register(formData);
+    try {      
+      const response = await batchService.postCooking(batchId, batchDate, weightAfterCooking, storageStart);
   
       if (response.error) {
         toast.error(response.error);
       } else {
-        setFinalWeight('');
-        setBeginStorage('');
-        setEndStorage('');
+        setBatchId('');
+        setBatchDate('');
+        setWeightAfterCooking('');
         toast.success('Form submitted successfully');
       }
     } catch (error) {
@@ -50,20 +45,7 @@ function Stage2() {
     } finally {
       setLoading(false);
     }
-  };*/
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  
-    const check = handleInputErrors();
-    if (!check) return;
-  
-    setLoading(true);
-    setTimeout(() => {
-      setProductionTime('');
-      toast.success('Form submitted successfully');
-      setLoading(false);
-    }, 2000);
-  }
+  };
   
   return (
     <section className="dark:bg-primary_login_dark">
@@ -79,34 +61,34 @@ function Stage2() {
             </h1>
             <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
             <div className = "ml-4 mr-4">
-                <label htmlFor="batchID" className="block mb-2 text-sm font-medium text-[#232d42] dark:text-white">
-                  Batch ID
+                <label htmlFor="batchId" className="block mb-2 text-sm font-medium text-[#232d42] dark:text-white">
+                  Batch Id
                 </label>
                 <input
                   type="text"
-                  name="batchID"
-                  id="batchID"
-                  value={batchID}
-                  onChange={(e) => setBatchID(e.target.value)}
+                  name="batchId"
+                  id="batchId"
+                  value={batchId}
+                  onChange={(e) => setBatchId(e.target.value)}
                   className="border sm:text-sm rounded-lg block w-full p-2.5 bg-white dark:bg-third_login_dark border-[#232d42] dark:border-gray-600
                                     placeholder-gray-400 text-black dark:text-white focus:ring-white focus:border-white"
-                  placeholder="Enter batch ID"
+                  placeholder="Enter batch Id"
                   required
                 />
               </div>
               <div className = "ml-4 mr-4">
-              <label htmlFor="productionTime" className="block mb-2 text-sm font-medium text-[#232d42] dark:text-white">
+              <label htmlFor="batchDate" className="block mb-2 text-sm font-medium text-[#232d42] dark:text-white">
                   Production Time
                 </label>
                 <input
                   type="date"
-                  name="productionTime"
-                  id="productionTime"
-                  value={productionTime}
-                  onChange={(e) => setProductionTime(e.target.value)}
+                  name="batchDate"
+                  id="batchDate"
+                  value={batchDate}
+                  onChange={(e) => setBatchDate(e.target.value)}
                   className="border sm:text-sm rounded-lg block w-full p-2.5 bg-white dark:bg-third_login_dark border-[#232d42] dark:border-gray-600
                                     placeholder-gray-400 text-black dark:text-white focus:ring-white focus:border-white"
-                  placeholder="Enter batch ID"
+                  placeholder="Enter batch Id"
                   required
                 />
               </div>
@@ -120,6 +102,22 @@ function Stage2() {
                   id="weightBeforeCooking"
                   value={weightAfterCooking}
                   onChange={(e) => setWeightAfterCooking(e.target.value)}
+                  className="border sm:text-sm rounded-lg block w-full p-2.5 bg-white dark:bg-third_login_dark border-[#232d42] dark:border-gray-600
+                                    placeholder-gray-400 text-black dark:text-white focus:ring-white focus:border-white"
+                  placeholder="Enter weight after cooking"
+                  required
+                />
+              </div>
+              <div className = "ml-4 mr-4">
+              <label htmlFor="storageStart" className="block mb-2 text-sm font-medium text-[#232d42] dark:text-white">
+                  Weight After Cooking
+                </label>
+                <input
+                  type="date"
+                  name="storageStart"
+                  id="storageStart"
+                  value={storageStart}
+                  onChange={(e) => setStorageStart(e.target.value)}
                   className="border sm:text-sm rounded-lg block w-full p-2.5 bg-white dark:bg-third_login_dark border-[#232d42] dark:border-gray-600
                                     placeholder-gray-400 text-black dark:text-white focus:ring-white focus:border-white"
                   placeholder="Enter weight after cooking"

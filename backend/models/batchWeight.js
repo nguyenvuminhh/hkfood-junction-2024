@@ -10,7 +10,7 @@ const batchWeight = new mongoose.Schema({
     batchDate: {
         type: Date,
     },
-    weightsBeforeCooking: {
+    weightBeforeCooking: {
         type: Number,
     },
     storageStart: {
@@ -19,10 +19,10 @@ const batchWeight = new mongoose.Schema({
     storageEnd: {
         type: Date,
     },
-    weightsAfterCooking: {
+    weightAfterCooking: {
         type: Number,
     },
-    weightsAfterStorage: {
+    weightAfterStorage: {
         type: Number,
     },
     stage: {
