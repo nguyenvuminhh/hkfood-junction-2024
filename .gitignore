@@ -5,6 +5,14 @@ myenv/
 
 ~$HKFoods_Hackathon data .xlsx
 node_modules
+<<<<<<< HEAD
 *.env
 **.env
 .env
+=======
+.env**node_modules
+*node_modules
+
+**.env
+*.env
+>>>>>>> dc644bacb7ebc46df4a322d1dc26a8adf8a9f9ee
