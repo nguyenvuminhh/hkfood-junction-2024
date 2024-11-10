@@ -65,7 +65,7 @@ const Storage = () => {
                 
                 setDeviations1((prevDev) => {
 
-                    const newDev = data.deviations.slice(-10);
+                    const newDev = data.storageWeightLossDeviations.slice(-10);
                     console.log('newwwdevvvv', newDev)
                     return newDev
     
@@ -77,7 +77,7 @@ const Storage = () => {
                     return newNotifications;
                 });
                 setDeviations2((prevDev) => {
-                    const newDev = data.deviations.slice(-10);
+                    const newDev = data.storageWeightLossDeviations.slice(-10);
                     console.log('newwwdevvvv', newDev)
                     return newDev
                 })
