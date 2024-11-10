@@ -7,6 +7,7 @@ const multer = require("multer");
 const csv = require("csv-parser");
 const { Readable } = require("stream");
 const { percentile } = require("percentile"); 
+const { io } = require('../socket/socket');
 
 const upload = multer()
 
@@ -122,11 +123,14 @@ router.post("/:prodId", async (req, res) => {
             phase: 4,
             statistic: finalProdDeviation
         })
+        console.log("notification111")
         await notification.save()
+        io.emit('notification', notification)
         product.notifications.push(notification)
+        
     }
-    
-    product.tenNearestDeviation.push(finalProdDeviation)
+    console.log("notification222")
+    product.deviations.push(finalProdDeviation)
     await product.save()
     res.json({
         notification,
