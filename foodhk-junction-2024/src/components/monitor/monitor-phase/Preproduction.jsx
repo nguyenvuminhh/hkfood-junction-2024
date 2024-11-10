@@ -107,7 +107,7 @@ const Preproduction = () => {
             <TopNavigation darkTheme={darkTheme} handleMode={handleMode} title = "Preproduction" />
             <div className="flex h-dvh gap-6 w-dvw">
                 <div className="basis-1/2 mt-6 flex flex-col items-center justify-center">
-                    <div className = "basis-1/2 flex flex-col items-center">
+                    <div className = "mt-16 basis-1/2 flex flex-col items-center">
                         <h2 className = "mb-4 text-xl text-bold"> {productName1} </h2>
                         <PreproductionNotification notifications={notifications1} notification={notification}  />
                     </div>    
@@ -117,7 +117,7 @@ const Preproduction = () => {
                     </div>
                 </div>
                 {!!productName2 && (<div className="basis-1/2 mt-6 flex flex-col items-center justify-center">
-                    <div className = "basis-1/2 flex flex-col items-center">
+                    <div className = "mt-16 basis-1/2 flex flex-col items-center">
                         <h2 className = "mb-4 text-xl text-bold"> {productName2} </h2>
                         <PreproductionNotification notifications={notifications2} notification={notification} />
                     </div>
