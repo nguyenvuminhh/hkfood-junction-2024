@@ -29,7 +29,7 @@ const PreproductionNotification = ({ notification, notifications }) => {
         <>
             {/* Check if notifications array is empty */}
             <div className = "flex flex-col justify-center items-center">
-            {notifications.length === 0 ? (
+            {!notifications || notifications.length === 0 ? (
                 <div className="ml-4 p-4 h-6 rounded mb-2 text-gray-500">
                     No notifications available for this product
                 </div>

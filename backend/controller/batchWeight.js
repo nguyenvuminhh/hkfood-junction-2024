@@ -124,12 +124,13 @@ router.get('/:batchId', async (req, res) => {
 });
 
 router.delete('/', async (req, res) => {
-    Notification.deleteMany({})
-    BatchWeight.deleteMany({})
-    Product.deleteMany({})
+    await Notification.deleteMany({});
+    await BatchWeight.deleteMany({});
+    await Product.deleteMany({});
+    
     res.json({
         ok: 'ok'
-    })
+    });
 })
 
 module.exports = router

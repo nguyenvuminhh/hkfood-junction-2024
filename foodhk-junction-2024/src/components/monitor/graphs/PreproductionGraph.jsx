@@ -2,6 +2,9 @@ import { ChartsReferenceLine } from '@mui/x-charts';
 import { LineChart } from '@mui/x-charts/LineChart';
 
 const PreproductionGraph = (props) => {
+  if (!props.deviations){
+    return null
+  }
   const data = props.deviations.slice(0, 10);
   return (
     <div className="bg-white rounded-md border border-gray-300 mr-2">

@@ -24,12 +24,12 @@ const Cooking = () => {
         const fetchLatestData = async () => {
             try {
                 const latestData = await productService.getLatestProductData();
-                setProductName1(latestData.prod1.prodName);
-                setProductName2(latestData.prod2.prodName);
-                setNotifications1(latestData.prod1.notifications);
-                setNotifications2(latestData.prod2.notifications);
-                setDeviations1(latestData.prod1.deviations);
-                setDeviations2(latestData.prod2.deviations);
+                setProductName1(latestData.prod1?.prodName);
+                setProductName2(latestData.prod2?.prodName);
+                setNotifications1(latestData.prod1?.notifications);
+                setNotifications2(latestData.prod2?.notifications);
+                setDeviations1(latestData.prod1?.deviations);
+                setDeviations2(latestData.prod2?.deviations);
             } catch (error) {
                 console.error("Failed to load notifications:", error);
             }
@@ -58,6 +58,7 @@ const Cooking = () => {
         };
     }, []); // Empty dependency array to run only once on mount
 
+    console.log('prod2',!!!productName2)
     return (
         <div className="dark:bg-secondary_login_dark bg-white flex flex-col items-center text-black dark:text-white min-h-dvh">
             <Helmet>
@@ -76,7 +77,7 @@ const Cooking = () => {
                         <CookingGraph deviations = {deviations1}/>
                     </div>
                 </div>
-                <div className="basis-1/2 mt-6 flex flex-col items-center justify-center">
+                {!!productName2 && (<div className="basis-1/2 mt-6 flex flex-col items-center justify-center">
                     <div className = "basis-1/2 flex flex-col items-center">
                         <h2 className = "mb-4 text-xl text-bold"> {productName2} </h2>
                         <CookingNotification notifications={notifications2} notification={notification} />
@@ -85,7 +86,7 @@ const Cooking = () => {
                         <h2 className = "mb-4 text-xl text-bold"> Weight deviations of the last 10 final products </h2>
                         <CookingGraph deviations = {deviations2} />
                     </div>
-                </div>
+                </div>)}
             </div>
         </div>
     );

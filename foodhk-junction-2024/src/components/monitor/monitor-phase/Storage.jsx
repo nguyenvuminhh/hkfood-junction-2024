@@ -76,7 +76,7 @@ const Storage = () => {
                         <StorageGraph deviations = {deviations1}/>
                     </div>
                 </div>
-                <div className="basis-1/2 mt-6 flex flex-col items-center justify-center">
+                {!!productName2 && (<div className="basis-1/2 mt-6 flex flex-col items-center justify-center">
                     <div className = "basis-1/2 flex flex-col items-center">
                         <h2 className = "mb-4 text-xl text-bold"> {productName2} </h2>
                         <StorageNotification notifications={notifications2} notification={notification} />
@@ -85,7 +85,7 @@ const Storage = () => {
                         <h2 className = "mb-4 text-xl text-bold"> Weight deviations of the last 10 final products </h2>
                         <StorageGraph deviations = {deviations2} />
                     </div>
-                </div>
+                </div>)}
             </div>
         </div>
     );
