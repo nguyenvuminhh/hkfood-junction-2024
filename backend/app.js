@@ -12,6 +12,7 @@ const mongoose = require('mongoose')
 const { MONGOOSE_URL } = require('./util/config')
 const batchWeight = require('./controller/batchWeight')
 const productWeight = require('./controller/productWeight')
+const message = require('./controller/message')
 
 const { errorHandler, requestLogger } = require('./util/middleware')
 
@@ -30,6 +31,7 @@ app.use(requestLogger)
 app.get('/ping', (req, res) => {res.send('pong')})
 app.use('/api/batchWeight', batchWeight)
 app.use('/api/productWeight', productWeight)
+app.use('/api/message', message)
 app.use(errorHandler)
 
 module.exports = app

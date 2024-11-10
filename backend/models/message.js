@@ -5,7 +5,7 @@ const message = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
     },
     source: {
-        type: number,
+        type: Number,
     },
     message: {
         type: String,
