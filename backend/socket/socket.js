@@ -6,7 +6,7 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
-        origin: '*',
+        origin: 'https://hk-food-junction-2024.vercel.app/',
         methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
         credentials: true
     }

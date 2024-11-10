@@ -30,7 +30,7 @@ const CommunicationChannel = () => {
     }, []);
 
     useEffect(() => {
-        const socket = io("http://localhost:3000"); // Connect to the server
+        const socket = io("https://hkfood-junction-2024.fly.dev/"); // Connect to the server
 
         // Listen for real-time data from the server
         socket.on('message', (data) => {
