@@ -12,6 +12,8 @@ import io from 'socket.io-client';
 const Preproduction = () => {
     const [notifications1, setNotifications1] = useState([]);
     const [notifications2, setNotifications2] = useState([]);
+    const [productId1, setProductId1] = useState(null);
+    const [productId2, setProductId2] = useState(null);
     const [productName1, setProductName1] = useState("");
     const [productName2, setProductName2] = useState("");
     const [deviations1, setDeviations1] = useState([]);
@@ -26,6 +28,8 @@ const Preproduction = () => {
                 const latestData = await productService.getLatestProductData();
                 setProductName1(latestData.prod1.prodName);
                 setProductName2(latestData.prod2.prodName);
+                setProductId1(latestData.prod1.prodId);
+                setProductId2(latestData.prod2.prodId);
                 setNotifications1(latestData.prod1.notifications);
                 setNotifications2(latestData.prod2.notifications);
                 setDeviations1(latestData.prod1.deviations);
@@ -44,11 +48,20 @@ const Preproduction = () => {
         // Listen for real-time data from the server
         socket.on('notification', (data) => {
             console.log('Received real-time data:', data);
-            if (data.prodId === 1) {
-                setNotifications1((prevNotifications) => [ data, ...prevNotifications]);
-            } else {
-                setNotifications2((prevNotifications) => [ data, ...prevNotifications]);
-            }
+            console.log('Product ID:', data.prodId);
+            console.log('Product ID 1:', productId1);
+            console.log('Product ID 2:', productId2);
+        if (data.prodId === "5409") {
+            setNotifications1((prevNotifications) => {
+                const newNotifications = [data, ...prevNotifications];
+                return newNotifications.length > 6 ? newNotifications.slice(0, -1) : newNotifications;
+            });
+        } else if (data.prodId === "5030") {
+            setNotifications2((prevNotifications) => {
+                const newNotifications = [data, ...prevNotifications];
+                return newNotifications.length > 6 ? newNotifications.slice(0, -1) : newNotifications;
+            });
+        }
         });
 
         // Clean up the listener and disconnect socket on unmount
@@ -66,17 +79,25 @@ const Preproduction = () => {
             <TopNavigation darkTheme={darkTheme} handleMode={handleMode} />
             <h1 className="text-center text-5xl mt-8">Preproduction</h1>
             <div className="flex h-dvh gap-6 w-dvw">
-                <div className="basis-1/2 mt-24 flex flex-col items-center">
-                    <h2> {productName1} </h2>
-                    <PreproductionNotification notifications={notifications1} notification={notification}  />
-                    <h2> Weight deviations of the last 10 final products </h2>
-                    <PreproductionGraph deviations = {deviations1}/>
+                <div className="basis-1/2 mt-6 flex flex-col items-center justify-center">
+                    <div className = "basis-1/2 flex flex-col items-center">
+                        <h2 className = "mb-4 text-xl text-bold"> {productName1} </h2>
+                        <PreproductionNotification notifications={notifications1} notification={notification}  />
+                    </div>    
+                    <div className = "basis-1/2 flex flex-col items-center">
+                        <h2 className = "mb-4 text-xl text-bold"> Weight deviations of the last 10 final products </h2>
+                        <PreproductionGraph deviations = {deviations1}/>
+                    </div>
                 </div>
-                <div className="basis-1/2 mt-24 flex flex-col items-center">
-                    <h2> {productName2} </h2>
-                    <PreproductionNotification notifications={notifications2} notification={notification} />
-                    <h2> Weight deviations of the last 10 final products </h2>
-                    <PreproductionGraph deviations = {deviations2} />
+                <div className="basis-1/2 mt-6 flex flex-col items-center justify-center">
+                    <div className = "basis-1/2 flex flex-col items-center">
+                        <h2 className = "mb-4 text-xl text-bold"> {productName2} </h2>
+                        <PreproductionNotification notifications={notifications2} notification={notification} />
+                    </div>
+                    <div className = "basis-1/2 flex flex-col items-center">
+                        <h2 className = "mb-4 text-xl text-bold"> Weight deviations of the last 10 final products </h2>
+                        <PreproductionGraph deviations = {deviations2} />
+                    </div>
                 </div>
             </div>
         </div>

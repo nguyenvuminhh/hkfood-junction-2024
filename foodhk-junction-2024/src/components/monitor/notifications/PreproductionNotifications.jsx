@@ -1,4 +1,4 @@
-//import Notification from "./Notification";
+// import Notification from "./Notification";
 
 const PreproductionNotification = ({ notification, notifications }) => {
     function formatIsoTime(isoString) {
@@ -14,6 +14,7 @@ const PreproductionNotification = ({ notification, notifications }) => {
         
         return `${hours}:${minutes} · ${day}/${month}`;
     }
+    
     function formatToDayMonth(isoString) {
         const date = new Date(isoString);
 
@@ -23,37 +24,46 @@ const PreproductionNotification = ({ notification, notifications }) => {
 
         return `${day}/${month}`;
     }
+
     return (
         <>
-            {/*<Notification notification={notification} />*/}
-            {notifications.map((notification, index) => {
-                let message;
-                let color;
+            {/* Check if notifications array is empty */}
+            <div className = "flex flex-col justify-center items-center">
+            {notifications.length === 0 ? (
+                <div className="ml-4 p-4 h-6 rounded mb-2 text-gray-500">
+                    No notifications available for this product
+                </div>
+            ) : (
+                notifications.map((notification, index) => {
+                    let message;
+                    let color;
 
-                switch (notification.phase) {
-                    case 2:
-                        message = `${formatIsoTime(notification.createdAt)} | Batch: #${notification.batchId} · ${formatToDayMonth(notification.batchDate)} | Cooking weight loss: ${notification.statistic.toFixed(2)}%`;
-                        color = 'bg-blue-300';
-                        break;
-                    case 3:
-                        message = `${formatIsoTime(notification.createdAt)} | Batch: #${notification.batchId} · ${formatToDayMonth(notification.batchDate)} | Storage weight deviation: ${notification.statistic.toFixed(2)}%`;
-                        color = 'bg-yellow-300'; //TODO:
-                        break;
-                    case 4:
-                        message =  `${formatIsoTime(notification.createdAt)} | Product: #${notification.prodId} | Final product weight deviation: ${notification.statistic.toFixed(2)}%`;
-                        color = 'bg-red-300';
-                        break;
-                    default:
-                        message = "Status update unavailable.";
-                        color = "bg-gray-300";
-                }
+                    switch (notification.phase) {
+                        case 2:
+                            message = `${formatIsoTime(notification.createdAt)} | Batch: #${notification.batchId} · ${formatToDayMonth(notification.batchDate)} | Cooking weight loss: ${notification.statistic.toFixed(2)}%`;
+                            color = 'bg-blue-300';
+                            break;
+                        case 3:
+                            message = `${formatIsoTime(notification.createdAt)} | Batch: #${notification.batchId} · ${formatToDayMonth(notification.batchDate)} | Storage weight deviation: ${notification.statistic.toFixed(2)}%`;
+                            color = 'bg-yellow-300';
+                            break;
+                        case 4:
+                            message = `${formatIsoTime(notification.createdAt)} | Product: #${notification.prodId} | Final product weight deviation: ${notification.statistic.toFixed(2)}%`;
+                            color = 'bg-red-300';
+                            break;
+                        default:
+                            message = "Status update unavailable.";
+                            color = "bg-gray-300";
+                    }
 
-                return (
-                    <div key={index} className={`alert ${color} ml-4 p-4 h-6 rounded mb-2 text-black flex `}>
-                        <span>{message}</span>
-                    </div>
-                );
-            })}
+                    return (
+                        <div key={index} className={`alert ${color} ml-4 p-4 h-6 rounded mb-2 text-black flex`}>
+                            <span>{message}</span>
+                        </div>
+                    );
+                })
+            )}
+            </div>
         </>
     );
 };

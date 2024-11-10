@@ -4,7 +4,7 @@ import { LineChart } from '@mui/x-charts/LineChart';
 const StorageGraph = (props) => {
   const data = props.deviations.slice(0, 10);
   return (
-    <div className="bg-white rounded-md border border-gray-300 mr-2 w-3/4">
+    <div className="bg-white rounded-md border border-gray-300 mr-2">
       <LineChart
         xAxis={[{ data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }]}
         series={[

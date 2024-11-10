@@ -66,17 +66,25 @@ const Storage = () => {
             <TopNavigation darkTheme={darkTheme} handleMode={handleMode} />
             <h1 className="text-center text-5xl mt-8">Storage</h1>
             <div className="flex h-dvh gap-6 w-dvw">
-                <div className="basis-1/2 mt-24 flex flex-col items-center">
-                    <h2> {productName1} </h2>
-                    <StorageNotification notifications={notifications1} notification={notification}  />
-                    <h2> Weight deviations of the last 10 final products </h2>
-                    <StorageGraph deviations = {deviations1}/>
+                <div className="basis-1/2 mt-6 flex flex-col items-center justify-center">
+                    <div className = "basis-1/2 flex flex-col items-center">
+                        <h2 className = "mb-4 text-xl text-bold"> {productName1} </h2>
+                        <StorageNotification notifications={notifications1} notification={notification}  />
+                    </div>    
+                    <div className = "basis-1/2 flex flex-col items-center">
+                        <h2 className = "mb-4 text-xl text-bold"> Weight deviations of the last 10 final products </h2>
+                        <StorageGraph deviations = {deviations1}/>
+                    </div>
                 </div>
-                <div className="basis-1/2 mt-24 flex flex-col items-center">
-                    <h2> {productName2} </h2>
-                    <StorageNotification notifications={notifications2} notification={notification} />
-                    <h2> Weight deviations of the last 10 final products </h2>
-                    <StorageGraph deviations = {deviations2} />
+                <div className="basis-1/2 mt-6 flex flex-col items-center justify-center">
+                    <div className = "basis-1/2 flex flex-col items-center">
+                        <h2 className = "mb-4 text-xl text-bold"> {productName2} </h2>
+                        <StorageNotification notifications={notifications2} notification={notification} />
+                    </div>
+                    <div className = "basis-1/2 flex flex-col items-center">
+                        <h2 className = "mb-4 text-xl text-bold"> Weight deviations of the last 10 final products </h2>
+                        <StorageGraph deviations = {deviations2} />
+                    </div>
                 </div>
             </div>
         </div>
