@@ -32,13 +32,13 @@ const Preproduction = () => {
                     setProductName1(latestData.prod1?.prodName);
                     setNotifications1(latestData.prod1?.notifications);
                     setProductId1(latestData.prod1?.prodId);
-                    setDeviations1(latestData.prod1?.weightLossDuringCooking);
+                    setDeviations1(latestData.prod1?.deviations);
                 }
                 if (latestData.prod2) {
                     setProductName2(latestData.prod2?.prodName);
                     setNotifications2(latestData.prod2?.notifications);
                     setProductId2(latestData.prod2?.prodId);
-                    setDeviations2(latestData.prod2?.weightLossDuringCooking);
+                    setDeviations2(latestData.prod2?.deviations);
           
                 }
                 

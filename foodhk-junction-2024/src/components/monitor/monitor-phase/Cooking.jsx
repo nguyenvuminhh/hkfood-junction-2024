@@ -79,7 +79,7 @@ const Cooking = () => {
                 
                 setDeviations1((prevDev) => {
 
-                    const newDev = data.deviations.slice(-10);
+                    const newDev = data.weightLossDuringCooking.slice(-10);
                     console.log('newwwdevvvv', newDev)
                     return newDev
     
@@ -91,7 +91,7 @@ const Cooking = () => {
                     return newNotifications;
                 });
                 setDeviations2((prevDev) => {
-                    const newDev = data.deviations.slice(-10);
+                    const newDev = data.weightLossDuringCooking.slice(-10);
                     console.log('newwwdevvvv', newDev)
                     return newDev
                 })
