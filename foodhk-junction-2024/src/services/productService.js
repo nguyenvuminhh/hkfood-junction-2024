@@ -12,4 +12,14 @@ const weightFinalProduct = async (prodId, weight) => {
     return res.data
 }
 
-export default { newProduct, weightFinalProduct }
+const getLatestProductData = async() => {
+    const res = await axios.get(`${baseUrl}/latest`)
+    return res.data
+}
+
+const getAllProducts = async() => {
+    const res = await axios.get(`${baseUrl}/all`)
+    return res.data
+}
+ 
+export default { newProduct, weightFinalProduct, getLatestProductData, getAllProducts }

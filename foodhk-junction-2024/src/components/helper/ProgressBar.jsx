@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 import { useProgress } from '../../context/ProgressContext';
 
 const ProgressBar = () => {

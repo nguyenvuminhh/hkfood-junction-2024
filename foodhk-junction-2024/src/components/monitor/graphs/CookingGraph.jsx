@@ -1,7 +1,7 @@
 import { ChartsReferenceLine } from '@mui/x-charts';
 import { LineChart } from '@mui/x-charts/LineChart';
 
-const PreproductionGraph = (props) => {
+const CookingGraph = (props) => {
   const data = props.deviations.slice(0, 10);
   return (
     <div className="bg-white rounded-md border border-gray-300 mr-2">
@@ -22,12 +22,12 @@ const PreproductionGraph = (props) => {
   );
 }
 
-export default PreproductionGraph;
+export default CookingGraph;
 
 // import { ChartsReferenceLine } from '@mui/x-charts';
 // import { LineChart } from '@mui/x-charts/LineChart';
 
-// const PreproductionGraph = (props) => {
+// const CookingGraph = (props) => {
 //   const data = props.deviations;
 //   return (
 //     <div className = "bg-white rounded-md border border-gray-300 mr-2 w-3/4">
@@ -45,4 +45,4 @@ export default PreproductionGraph;
 //     );
 // }
 
-// export default PreproductionGraph;
+// export default CookingGraph;

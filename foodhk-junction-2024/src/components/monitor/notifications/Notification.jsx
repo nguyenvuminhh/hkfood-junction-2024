@@ -1,6 +1,6 @@
 import { toast } from 'react-hot-toast';
 
-const PreproductionNotification = ({ notification }) => {
+const Notification = ({ notification }) => {
     const getBackgroundColor = () => {
         switch (notification.type) {
             case "success":
@@ -27,10 +27,10 @@ const PreproductionNotification = ({ notification }) => {
                 <div className="flex items-start">
                   <div className="ml-3 flex-1">
                     <p className="text-sm font-medium text-gray-900">
-                        {notification.description}
+                        {notification.description || "No description available"}
                     </p>
                     <p className="mt-1 text-sm text-gray-500">
-                        {notification.time}
+                        {notification.time || "No time provided"}
                     </p>
                   </div>
                 </div>
@@ -48,4 +48,4 @@ const PreproductionNotification = ({ notification }) => {
     );
 };
 
-export default PreproductionNotification;
+export default Notification;

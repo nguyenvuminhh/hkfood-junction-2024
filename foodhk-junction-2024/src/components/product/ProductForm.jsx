@@ -61,7 +61,7 @@ function ProductForm() {
         <title>Add new product</title>
       </Helmet>
       <Toaster position="top-center" reverseOrder={false} />
-      <div className="basis-2/3 pb-10">
+      <div className="basis-2/3 pb-10 mt-12">
         <div className="w-[40vw] p-6 space-y-4 md:space-y-6 sm:p-8 rounded-lg dark:shadow-white border sm:max-w-md xl:p-0
                         bg-white dark:bg-secondary_login_dark dark:border-gray-700 border-gray-300">
           <h1 className="text-center mt-4 text-xl font-semibold leading-tight tracking-tight md:text-2xl text-[#232d42] dark:text-white">

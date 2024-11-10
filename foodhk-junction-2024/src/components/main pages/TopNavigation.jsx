@@ -1,11 +1,13 @@
 import React from 'react';
 import { FaMoon, FaSun, FaUpload, FaHome } from 'react-icons/fa';
 import { MdOutlineScreenshotMonitor } from "react-icons/md";
+import RealTimeClock from '../helper/Clock';
 
 
 function TopNavigation({ darkTheme, handleMode }) {
   return (
     <div className="absolute top-10 flex gap-5 right-20">
+      <RealTimeClock/>
       <button
         onClick={() => (window.location.href = '/monitor')}
       >

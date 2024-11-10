@@ -3,6 +3,7 @@ const BatchWeight = require('../models/batchWeight')
 const Product = require('../models/product')
 const Notification = require('../models/notification')
 const router = require('express').Router()
+const { io } = require( '../socket/socket')
 
 router.post('/:process/', async (req, res) => {
     const process = req.params.process
@@ -10,6 +11,8 @@ router.post('/:process/', async (req, res) => {
     console.log(body)
     const batchId = body.batchId
     const batchDate = new Date(body.batchDate)
+    let notification = undefined
+
     if (process == "preprocess") {
         const prodId = body.prodId
         const weightBeforeCooking = body.weightBeforeCooking
@@ -43,18 +46,20 @@ router.post('/:process/', async (req, res) => {
         let abnormal = false
         if (weightLossDuringCooking < product.lowerCookingLossBound || weightLossDuringCooking > product.upperCookingLossBound) {
             abnormal = true
-            const notification = new Notification({
+            notification = new Notification({
                 batchId,
                 batchDate,
                 phase: 2,
                 statistic: weightLossDuringCooking
             })
             notification.save()
+            io.emit('notification', notification)
+            product.notifications.push(notification)
+            product.save()
         }
 
-        
-
         res.json({
+            notification,
             abnormal,
             weightLossDuringCooking
         })
@@ -84,16 +89,21 @@ router.post('/:process/', async (req, res) => {
         let abnormal = false
         if (weightLossDeviationRate < threshold) {
             abnormal = true
-            const notification = new Notification({
+            notification = new Notification({
                 batchId,
                 batchDate,
                 phase: 3,
                 statistic: weightLossDeviationRate
             })
             notification.save()
+            io.emit('notification', notification)
+            const product = await Product.findOne({ prodId: batch.prodId })
+            product.notifications.push(notification)
+            product.save()
         }
 
         res.json({
+            notification,
             abnormal,
             weightLossDeviationRate
         })
@@ -112,5 +122,14 @@ router.get('/:batchId', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
+
+router.delete('/', async (req, res) => {
+    Notification.deleteMany({})
+    BatchWeight.deleteMany({})
+    Product.deleteMany({})
+    res.json({
+        ok: 'ok'
+    })
+})
 
 module.exports = router

@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { Helmet } from 'react-helmet';
+import { changeNotification } from '../../reducers/notificationReducer';
 import batchService from '../../services/batchService';
+import { useDispatch } from 'react-redux';
+
 function Stage2() {
   const [batchId, setBatchId] = useState('');
   const [batchDate, setBatchDate] = useState('');
@@ -18,6 +21,8 @@ function Stage2() {
     return true;
   }
 
+  const dispatch = useDispatch();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
   
@@ -32,6 +37,9 @@ function Stage2() {
       if (response.error) {
         toast.error(response.error);
       } else {
+        if (response.abnormal) {
+          dispatch(changeNotification(response.notification));
+        }
         setBatchId('');
         setBatchDate('');
         setWeightAfterCooking('');

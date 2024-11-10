@@ -7,6 +7,7 @@ const multer = require("multer");
 const csv = require("csv-parser");
 const { Readable } = require("stream");
 const { percentile } = require("percentile"); 
+const { io } = require('../socket/socket');
 
 const upload = multer()
 
@@ -114,17 +115,25 @@ router.post("/:prodId", async (req, res) => {
         // Check if the actual weight is within bounds
         return actualWeight >= lowerBound && actualWeight <= upperBound;
     }
-    
+    let notification = undefined
     const abnormal = !isWeightWithinBounds(targetWeight, actualWeight)
     if (abnormal) {
-        const notification = new Notification({
+        notification = new Notification({
             prodId,
             phase: 4,
             statistic: finalProdDeviation
         })
-        notification.save()
+        console.log("notification111")
+        await notification.save()
+        io.emit('notification', notification)
+        product.notifications.push(notification)
+        
     }
+    console.log("notification222")
+    product.deviations.push(finalProdDeviation)
+    await product.save()
     res.json({
+        notification,
         abnormal,
         finalProdDeviation
     })
@@ -134,6 +143,27 @@ router.get("/all", async (req, res) => {
     try {
         const products = await Product.find();
         res.json(products);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+router.get("/latest", async (req, res) => {
+    try {        
+        // Find the product and populate the latest 6 notifications
+        const products = await Product.find({})
+            .populate({
+                path: 'notifications',
+                options: { sort: { createdAt: -1 }, limit: 6 } // Latest 6 notifications by created date
+            });
+        
+        if (products.length === 0) {
+            return res.status(404).json({ error: "Products not found" });
+        }
+        res.json({
+            prod1: products[0],
+            prod2: products[1],
+        });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
