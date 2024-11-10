@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { Helmet } from 'react-helmet';
 import batchService from '../../services/batchService';
+import { changeNotification } from '../../reducers/notificationReducer';
+import { useDispatch } from 'react-redux';
 
 function Stage3() {
   const [batchId, setBatchId] = useState('');
@@ -19,6 +21,8 @@ function Stage3() {
     return true;
   }
 
+  const dispatch = useDispatch();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
   
@@ -33,6 +37,9 @@ function Stage3() {
       if (response.error) {
         toast.error(response.error);
       } else {
+        if (response.abnormal) {
+          dispatch(changeNotification(response.notification));
+        }
         setBatchId('');
         setBatchDate('');
         setStorageEnd('');

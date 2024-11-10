@@ -12,7 +12,6 @@ const MainMonitor = () => {
         { label: 'Preproduction phase', id: 1 },
         { label: 'Cooking phase', id: 2 },
         { label: 'Storage phase', id: 3 },
-        { label: 'Packing phase', id: 4 }
     ];
 
     // Define background colors for each phase
@@ -24,8 +23,6 @@ const MainMonitor = () => {
                 return 'bg-blue-300';
             case 3:
                 return 'bg-yellow-300';
-            case 4:
-                return 'bg-red-300';
             default:
                 return 'bg-gray-300';
         }

@@ -1,6 +1,6 @@
 //import Notification from "./Notification";
 
-const PreproductionNotification = ({ notification, notifications }) => {
+const StorageNotification = ({ notification, notifications }) => {
     function formatIsoTime(isoString) {
         const date = new Date(isoString);
         
@@ -32,7 +32,7 @@ const PreproductionNotification = ({ notification, notifications }) => {
 
                 switch (notification.phase) {
                     case 2:
-                        message = `${formatIsoTime(notification.createdAt)} | Batch: #${notification.batchId} · ${formatToDayMonth(notification.batchDate)} | Cooking weight loss: ${notification.statistic.toFixed(2)}%`;
+                        message = `${formatIsoTime(notification.createdAt)} | Batch: #${notification.batchId} · ${formatToDayMonth(notification.batchDate)} | Storage weight loss: ${notification.statistic.toFixed(2)}%`;
                         color = 'bg-blue-300';
                         break;
                     case 3:
@@ -58,4 +58,4 @@ const PreproductionNotification = ({ notification, notifications }) => {
     );
 };
 
-export default PreproductionNotification;
+export default StorageNotification;

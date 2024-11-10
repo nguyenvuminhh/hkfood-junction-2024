@@ -1,6 +1,6 @@
 //import Notification from "./Notification";
 
-const PreproductionNotification = ({ notification, notifications }) => {
+const CookingNotification = ({ notification, notifications }) => {
     function formatIsoTime(isoString) {
         const date = new Date(isoString);
         
@@ -58,4 +58,4 @@ const PreproductionNotification = ({ notification, notifications }) => {
     );
 };
 
-export default PreproductionNotification;
+export default CookingNotification;

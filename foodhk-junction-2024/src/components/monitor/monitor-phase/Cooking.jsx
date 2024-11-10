@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import PreproductionGraph from '../graphs/PreproductionGraph';
-import PreproductionNotification from '../notifications/PreproductionNotifications';
+import CookingGraph from '../graphs/CookingGraph';
+import CookingNotification from '../notifications/CookingNotifications';
 import TopNavigation from '../../main pages/TopNavigation';
 import useDarkMode from '../../../hooks/useDarkMode';
 import { Helmet } from 'react-helmet';
@@ -9,7 +9,7 @@ import productService from '../../../services/productService';
 import io from 'socket.io-client';
 
 
-const Preproduction = () => {
+const Cooking = () => {
     const [notifications1, setNotifications1] = useState([]);
     const [notifications2, setNotifications2] = useState([]);
     const [productName1, setProductName1] = useState("");
@@ -61,26 +61,26 @@ const Preproduction = () => {
     return (
         <div className="dark:bg-secondary_login_dark bg-white flex flex-col items-center text-black dark:text-white min-h-dvh">
             <Helmet>
-                <title>Preproduction</title>
+                <title>Cooking</title>
             </Helmet>
             <TopNavigation darkTheme={darkTheme} handleMode={handleMode} />
-            <h1 className="text-center text-5xl mt-8">Preproduction</h1>
+            <h1 className="text-center text-5xl mt-8">Cooking</h1>
             <div className="flex h-dvh gap-6 w-dvw">
                 <div className="basis-1/2 mt-24 flex flex-col items-center">
                     <h2> {productName1} </h2>
-                    <PreproductionNotification notifications={notifications1} notification={notification}  />
+                    <CookingNotification notifications={notifications1} notification={notification}  />
                     <h2> Weight deviations of the last 10 final products </h2>
-                    <PreproductionGraph deviations = {deviations1}/>
+                    <CookingGraph deviations = {deviations1}/>
                 </div>
                 <div className="basis-1/2 mt-24 flex flex-col items-center">
                     <h2> {productName2} </h2>
-                    <PreproductionNotification notifications={notifications2} notification={notification} />
+                    <CookingNotification notifications={notifications2} notification={notification} />
                     <h2> Weight deviations of the last 10 final products </h2>
-                    <PreproductionGraph deviations = {deviations2} />
+                    <CookingGraph deviations = {deviations2} />
                 </div>
             </div>
         </div>
     );
 }
 
-export default Preproduction;
+export default Cooking;

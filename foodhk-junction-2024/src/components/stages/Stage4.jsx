@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { Helmet } from 'react-helmet';
 import productService from '../../services/productService';
+import { useDispatch } from 'react-redux';
+import { changeNotification } from '../../reducers/notificationReducer';
 
 function Stage4() {
   const [prodId, setProdId] = useState('');
   const [weightAfterPacking, setWeightAfterPacking] = useState('');
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
 
   function handleInputErrors() {
     if (!prodId || !weightAfterPacking) {
@@ -30,6 +33,9 @@ function Stage4() {
       if (response.error) {
         toast.error(response.error);
       } else {
+        if (response.abnormal) {
+          dispatch(changeNotification(response.notification));
+        }
         setProdId('');
         setWeightAfterPacking('');
         toast.success('Form submitted successfully');
