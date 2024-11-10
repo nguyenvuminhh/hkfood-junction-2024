@@ -29,7 +29,7 @@ const PreproductionNotification = ({ notification, notifications }) => {
         <>
             {/* Check if notifications array is empty */}
             <div className = "flex flex-col justify-center items-center">
-            {notifications.length === 0 ? (
+            {!notifications || notifications.length === 0 ? (
                 <div className="ml-4 p-4 h-6 rounded mb-2 text-gray-500">
                     No notifications available for this product
                 </div>
@@ -37,21 +37,24 @@ const PreproductionNotification = ({ notification, notifications }) => {
                 notifications.map((notification, index) => {
                     let message;
                     let color;
-
-                    switch (notification.phase) {
+                    console.log('nottiiiii', notification)
+                    console.log(notification.phase)
+                    switch (Number(notification.phase)) {
                         case 2:
-                            message = `${formatIsoTime(notification.createdAt)} | Batch: #${notification.batchId} · ${formatToDayMonth(notification.batchDate)} | Cooking weight loss: ${notification.statistic.toFixed(2)}%`;
+                            message = `${formatIsoTime(notification.createdAt)} | Batch: #${notification.batchId} · ${formatToDayMonth(notification.batchDate)} | Cooking weight loss: ${notification.statistic.toFixed(2)}kg`;
                             color = 'bg-blue-300';
                             break;
                         case 3:
-                            message = `${formatIsoTime(notification.createdAt)} | Batch: #${notification.batchId} · ${formatToDayMonth(notification.batchDate)} | Storage weight deviation: ${notification.statistic.toFixed(2)}%`;
+                            message = `${formatIsoTime(notification.createdAt)} | Batch: #${notification.batchId} · ${formatToDayMonth(notification.batchDate)} | Storage weight deviation: ${notification.statistic.toFixed(2) * 100}%`;
                             color = 'bg-yellow-300';
                             break;
                         case 4:
-                            message = `${formatIsoTime(notification.createdAt)} | Product: #${notification.prodId} | Final product weight deviation: ${notification.statistic.toFixed(2)}%`;
+                            message = `${formatIsoTime(notification.createdAt)} | Product: #${notification.prodId} | Final product weight deviation: ${notification.statistic.toFixed(2) * 100}%`;
                             color = 'bg-red-300';
                             break;
                         default:
+
+                            console.log(Number(notification.phase))
                             message = "Status update unavailable.";
                             color = "bg-gray-300";
                     }

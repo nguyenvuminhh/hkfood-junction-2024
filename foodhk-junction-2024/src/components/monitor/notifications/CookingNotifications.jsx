@@ -26,18 +26,18 @@ const CookingNotification = ({ notification, notifications }) => {
     }
 
     // Filter notifications with phase 2
-    const phase2Notifications = notifications.filter(notification => notification.phase === 2);
+    const phase2Notifications = !notifications ? null : notifications.filter(notification => notification.phase === 2);
 
     return (
         <div className="flex flex-col justify-center items-center">
             {/* Check if filtered phase 2 notifications array is empty */}
-            {phase2Notifications.length === 0 ? (
+            {!phase2Notifications || phase2Notifications.length === 0 ? (
                 <div className="ml-4 p-4 h-6 rounded mb-2 text-gray-500">
                     No notifications available for this product
                 </div>
             ) : (
                 phase2Notifications.map((notification, index) => {
-                    const message = `${formatIsoTime(notification.createdAt)} | Batch: #${notification.batchId} · ${formatToDayMonth(notification.batchDate)} | Cooking weight loss: ${notification.statistic.toFixed(2)}%`;
+                    const message = `${formatIsoTime(notification.createdAt)} | Batch: #${notification.batchId} · ${formatToDayMonth(notification.batchDate)} | Cooking weight loss: ${notification.statistic.toFixed(2)}kg`;
                     const color = 'bg-blue-300';
 
                     return (

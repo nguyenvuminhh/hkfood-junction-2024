@@ -2,7 +2,11 @@ import { ChartsReferenceLine } from '@mui/x-charts';
 import { LineChart } from '@mui/x-charts/LineChart';
 
 const CookingGraph = (props) => {
-  const data = props.deviations.slice(0, 10);
+  if (!props.deviations){
+    return null
+  }
+  console.log(props.deviations.slice(-10))
+  const data = props.deviations.slice(-10);
   return (
     <div className="bg-white rounded-md border border-gray-300 mr-2">
       <LineChart
@@ -16,7 +20,8 @@ const CookingGraph = (props) => {
         width={500}
         height={200}
       >
-        <ChartsReferenceLine y={0} lineStyle={{ stroke: 'red' }} />
+        <ChartsReferenceLine y={props.lowerBound} lineStyle={{ stroke: 'blue' }} />
+        <ChartsReferenceLine y={props.upperBound} lineStyle={{ stroke: 'red' }} />
       </LineChart>
     </div>
   );

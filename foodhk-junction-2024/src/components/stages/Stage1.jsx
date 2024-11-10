@@ -112,7 +112,7 @@ function Stage1() {
               </div>
               <div className = "ml-4 mr-4">
                 <label htmlFor="weightBeforeCooking" className="block mb-2 text-sm font-medium text-[#232d42] dark:text-white">
-                  Weight Before Cooking
+                  Weight Before Cooking (kg)
                 </label>
                 <input
                   type="text"
@@ -122,7 +122,7 @@ function Stage1() {
                   onChange={(e) => setWeightBeforeCooking(e.target.value)}
                   className="border sm:text-sm rounded-lg block w-full p-2.5 bg-white dark:bg-third_login_dark border-[#232d42] dark:border-gray-600
                                     placeholder-gray-400 text-black dark:text-white focus:ring-white focus:border-white"
-                  placeholder="Enter weight before cooking"
+                  placeholder="Enter weight before cooking in kg"
                   required
                 />
               </div>

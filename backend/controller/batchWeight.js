@@ -11,7 +11,7 @@ router.post('/:process/', async (req, res) => {
     const batchId = body.batchId
     const batchDate = new Date(body.batchDate)
     let notification = undefined
-
+    
     if (process == "preprocess") {
         const prodId = body.prodId
         const weightBeforeCooking = body.weightBeforeCooking
@@ -23,7 +23,7 @@ router.post('/:process/', async (req, res) => {
             weightBeforeCooking
         })
         console.log(batch);
-        batch.save()
+        await batch.save()
         res.json({
             ok: 'ok'
         })
@@ -40,8 +40,9 @@ router.post('/:process/', async (req, res) => {
             },
             { new: true }
         )
-        const weightLossDuringCooking = batch.weightBeforeCooking - weightAfterCooking
         const product = await Product.findOne({ prodId: batch.prodId })
+        
+        const weightLossDuringCooking = batch.weightBeforeCooking - weightAfterCooking
         let abnormal = false
         if (weightLossDuringCooking < product.lowerCookingLossBound || weightLossDuringCooking > product.upperCookingLossBound) {
             abnormal = true
@@ -51,11 +52,17 @@ router.post('/:process/', async (req, res) => {
                 phase: 2,
                 statistic: weightLossDuringCooking
             })
-            notification.save()
-            io.emit('notification', notification)
+            await notification.save()
             product.notifications.push(notification)
-            product.save()
+            io.emit('notification', notification)
+            await product.save()
+            
         }
+
+        product.weightLossDuringCooking.push(weightLossDuringCooking)
+        await product.save()
+        const populated = await product.populate('notifications')
+        io.emit('newProduct', populated)
 
         res.json({
             notification,
@@ -77,34 +84,41 @@ router.post('/:process/', async (req, res) => {
             { new: true }
         )
         console.log("aaaaaa", (storageEnd - new Date(batch.storageStart)))
+        const product = await Product.findOne({ prodId: batch.prodId })
         
         const storageTime = (storageEnd - new Date(batch.storageStart)) / (1000 * 60 * 60 * 24)
         const lossRatePerDay = 99/100
 
         const idealWeightAfterStorage = batch.weightAfterCooking * Math.pow(lossRatePerDay, storageTime)
-        const weightLossDeviationRate = (weightAfterStorage - idealWeightAfterStorage) / idealWeightAfterStorage
+        const storageWeightLossDeviation = (weightAfterStorage - idealWeightAfterStorage) / idealWeightAfterStorage
         const threshold = 1/100
 
         let abnormal = false
-        if (weightLossDeviationRate < threshold) {
+        if (storageWeightLossDeviation < threshold) {
             abnormal = true
             notification = new Notification({
                 batchId,
                 batchDate,
                 phase: 3,
-                statistic: weightLossDeviationRate
+                statistic: storageWeightLossDeviation
             })
-            notification.save()
+            await notification.save()
             io.emit('notification', notification)
-            const product = await Product.findOne({ prodId: batch.prodId })
             product.notifications.push(notification)
-            product.save()
+            await product.save()
+            
         }
 
+        product.storageWeightLossDeviations.push(storageWeightLossDeviation)
+        await product.save()
+        const populated = await product.populate('notifications')
+
+        io.emit('newProduct', populated)
+        console.log('ppppppppppp')
         res.json({
             notification,
             abnormal,
-            weightLossDeviationRate
+            storageWeightLossDeviation
         })
     }
 })
@@ -123,12 +137,13 @@ router.get('/:batchId', async (req, res) => {
 });
 
 router.delete('/', async (req, res) => {
-    Notification.deleteMany({})
-    BatchWeight.deleteMany({})
-    Product.deleteMany({})
+    await Notification.deleteMany({});
+    await BatchWeight.deleteMany({});
+    await Product.deleteMany({});
+    
     res.json({
         ok: 'ok'
-    })
+    });
 })
 
 module.exports = router

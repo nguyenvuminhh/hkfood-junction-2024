@@ -38,7 +38,7 @@ const StorageNotification = ({ notification, notifications }) => {
                     </div>
                 ) : (
                     phase3Notifications.map((notification, index) => {
-                        const message = `${formatIsoTime(notification.createdAt)} | Batch: #${notification.batchId} · ${formatToDayMonth(notification.batchDate)} | Storage weight deviation: ${notification.statistic.toFixed(2)}%`;
+                        const message = `${formatIsoTime(notification.createdAt)} | Batch: #${notification.batchId} · ${formatToDayMonth(notification.batchDate)} | Storage weight deviation: ${notification.statistic.toFixed(2) * 100}%`;
                         const color = 'bg-yellow-300';
 
                         return (
