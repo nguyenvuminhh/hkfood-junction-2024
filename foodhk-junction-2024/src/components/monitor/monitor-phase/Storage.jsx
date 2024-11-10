@@ -63,8 +63,7 @@ const Storage = () => {
             <Helmet>
                 <title>Storage</title>
             </Helmet>
-            <TopNavigation darkTheme={darkTheme} handleMode={handleMode} />
-            <h1 className="text-center text-5xl mt-8">Storage</h1>
+            <TopNavigation darkTheme={darkTheme} handleMode={handleMode} title="Storage" />
             <div className="flex h-dvh gap-6 w-dvw">
                 <div className="basis-1/2 mt-6 flex flex-col items-center justify-center">
                     <div className = "basis-1/2 flex flex-col items-center">

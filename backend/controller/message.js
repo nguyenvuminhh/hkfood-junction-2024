@@ -1,8 +1,8 @@
-const Message = require('../model/message');
+const Message = require('../models/message');
 const router = require('express').Router();
 const { io } = require('../socket/socket');
 
-router.post('/message', async (req, res) => {
+router.post('/', async (req, res) => {
     try {
         const { source, message } = req.body;
         const newMessage = new Message({ source, message });
@@ -14,7 +14,7 @@ router.post('/message', async (req, res) => {
     }
 });
 
-router.get('/message', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
         const messages = await Message.find();
         res.status(200).json({ data: messages });
@@ -23,7 +23,7 @@ router.get('/message', async (req, res) => {
     }
 });
 
-router.get('/message/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
     try {
         const message = await Message.findById(req.params.id);
         if (!message) {
@@ -35,7 +35,7 @@ router.get('/message/:id', async (req, res) => {
     }
 });
 
-router.put('/message/:id', async (req, res) => {
+router.put('/:id', async (req, res) => {
     try {
         const { source, message } = req.body;
         const updatedMessage = await Message.findByIdAndUpdate(
@@ -56,7 +56,7 @@ router.put('/message/:id', async (req, res) => {
     }
 });
 
-router.delete('/message/:id', async (req, res) => {
+router.delete('/:id', async (req, res) => {
     try {
         const deletedMessage = await Message.findByIdAndDelete(req.params.id);
 

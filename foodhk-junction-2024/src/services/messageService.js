@@ -5,12 +5,13 @@ const baseUrl = 'http://localhost:3000/api';
 const getMessages = async () => {
     const response = await axios.get(`${baseUrl}/message`);
 
-    return response.data;
+    return response.data.data;
 }
 
-const postMessage = async (message) => {
+const postMessage = async (source, message) => {
     const response = await axios.post(`${baseUrl}/message`, {
         message,
+        source
     });
 
     return response.data;
