@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseUrl = 'http://localhost:3000/api';
+const baseUrl = 'hhttps://hkfood-junction-2024.fly.dev/api';
 
 const postPreprocess = async (prodId, batchId, batchDate, weightBeforeCooking) => {
     const response = await axios.post(`${baseUrl}/batchWeight/preprocess`, {
