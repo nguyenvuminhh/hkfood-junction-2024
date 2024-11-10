@@ -20,6 +20,14 @@ const product = new mongoose.Schema({
         type: [Number],
         default: Array(10).fill(0),
     },
+    weightLossDuringCooking: {
+        type: [Number],
+        default: Array(10).fill(0),
+    },
+    storageWeightLossDeviations: {
+        type: [Number],
+        default: Array(10).fill(0),
+    },
     notifications: [
         {
             type: mongoose.Schema.Types.ObjectId,

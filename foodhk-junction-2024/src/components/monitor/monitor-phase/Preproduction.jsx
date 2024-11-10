@@ -50,27 +50,44 @@ const Preproduction = () => {
         const socket = io("http://localhost:3000"); // Connect to the server
 
         // Listen for real-time data from the server
-        socket.on('notification', (data) => {
+        socket.on('newProduct', (data) => {
             console.log('Received real-time data:', data);
             console.log('Product ID:', data.prodId);
             console.log('Product ID 1:', productId1);
             console.log('Product ID 2:', productId2);
-        if (data.prodId === "5409") {
-            setNotifications1((prevNotifications) => {
-                const newNotifications = [data, ...prevNotifications];
-                return newNotifications.length > 6 ? newNotifications.slice(0, -1) : newNotifications;
-            });
-        } else if (data.prodId === "5030") {
+
+        console.log("DAAATAAA", data)
+        if (data.prodId === productId1) {
+            setNotifications1(() => {
+                const newNotifications = data.notifications.slice(-6);
+                
+                return newNotifications;
+            })
+            
+            setDeviations1((prevDev) => {
+
+                const newDev = data.deviations.slice(-10);
+                console.log('newwwdevvvv', newDev)
+                return newDev
+
+            })
+        } else if (data.prodId === productId2) {
             setNotifications2((prevNotifications) => {
-                const newNotifications = [data, ...prevNotifications];
-                return newNotifications.length > 6 ? newNotifications.slice(0, -1) : newNotifications;
+                const newNotifications = data.notifications.slice(-6);
+                
+                return newNotifications;
             });
+            setDeviations2((prevDev) => {
+                const newDev = data.deviations.slice(-10);
+                console.log('newwwdevvvv', newDev)
+                return newDev
+            })
         }
         });
 
         // Clean up the listener and disconnect socket on unmount
         return () => {
-            socket.off('notification');
+            socket.off('newProduct');
             socket.disconnect();
         };
     }, []); // Empty dependency array to run only once on mount

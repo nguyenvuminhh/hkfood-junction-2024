@@ -37,21 +37,24 @@ const PreproductionNotification = ({ notification, notifications }) => {
                 notifications.map((notification, index) => {
                     let message;
                     let color;
-
-                    switch (notification.phase) {
+                    console.log('nottiiiii', notification)
+                    console.log(notification.phase)
+                    switch (Number(notification.phase)) {
                         case 2:
-                            message = `${formatIsoTime(notification.createdAt)} | Batch: #${notification.batchId} · ${formatToDayMonth(notification.batchDate)} | Cooking weight loss: ${notification.statistic.toFixed(2)}%`;
+                            message = `${formatIsoTime(notification.createdAt)} | Batch: #${notification.batchId} · ${formatToDayMonth(notification.batchDate)} | Cooking weight loss: ${notification.statistic.toFixed(2)}kg`;
                             color = 'bg-blue-300';
                             break;
                         case 3:
-                            message = `${formatIsoTime(notification.createdAt)} | Batch: #${notification.batchId} · ${formatToDayMonth(notification.batchDate)} | Storage weight deviation: ${notification.statistic.toFixed(2)}%`;
+                            message = `${formatIsoTime(notification.createdAt)} | Batch: #${notification.batchId} · ${formatToDayMonth(notification.batchDate)} | Storage weight deviation: ${notification.statistic.toFixed(2) * 100}%`;
                             color = 'bg-yellow-300';
                             break;
                         case 4:
-                            message = `${formatIsoTime(notification.createdAt)} | Product: #${notification.prodId} | Final product weight deviation: ${notification.statistic.toFixed(2)}%`;
+                            message = `${formatIsoTime(notification.createdAt)} | Product: #${notification.prodId} | Final product weight deviation: ${notification.statistic.toFixed(2) * 100}%`;
                             color = 'bg-red-300';
                             break;
                         default:
+
+                            console.log(Number(notification.phase))
                             message = "Status update unavailable.";
                             color = "bg-gray-300";
                     }

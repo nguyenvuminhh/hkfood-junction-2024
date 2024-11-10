@@ -125,13 +125,18 @@ router.post("/:prodId", async (req, res) => {
         })
         console.log("notification111")
         await notification.save()
-        io.emit('notification', notification)
         product.notifications.push(notification)
-        
+        await product.save()
+        io.emit('notification', notification)
+        console.log('qqqqqqqqqqqq', product)
     }
     console.log("notification222")
     product.deviations.push(finalProdDeviation)
     await product.save()
+    const populated = await product.populate('notifications')
+
+    io.emit('newProduct', populated)
+
     res.json({
         notification,
         abnormal,

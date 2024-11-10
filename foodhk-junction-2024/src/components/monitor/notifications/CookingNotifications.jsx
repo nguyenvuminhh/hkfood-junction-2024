@@ -37,7 +37,7 @@ const CookingNotification = ({ notification, notifications }) => {
                 </div>
             ) : (
                 phase2Notifications.map((notification, index) => {
-                    const message = `${formatIsoTime(notification.createdAt)} | Batch: #${notification.batchId} · ${formatToDayMonth(notification.batchDate)} | Cooking weight loss: ${notification.statistic.toFixed(2)}%`;
+                    const message = `${formatIsoTime(notification.createdAt)} | Batch: #${notification.batchId} · ${formatToDayMonth(notification.batchDate)} | Cooking weight loss: ${notification.statistic.toFixed(2)}kg`;
                     const color = 'bg-blue-300';
 
                     return (

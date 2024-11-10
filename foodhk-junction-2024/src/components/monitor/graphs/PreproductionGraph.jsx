@@ -5,7 +5,10 @@ const PreproductionGraph = (props) => {
   if (!props.deviations){
     return null
   }
-  const data = props.deviations.slice(0, 10);
+  const data = props.deviations.slice(-10);
+
+  console.log(props.deviations)
+
   return (
     <div className="bg-white rounded-md border border-gray-300 mr-2">
       <LineChart
