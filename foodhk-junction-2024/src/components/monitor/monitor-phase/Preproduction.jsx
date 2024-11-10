@@ -21,29 +21,34 @@ const Preproduction = () => {
     const notification = useSelector((state) => state.selectedNotification);
     const [darkTheme, setDarkTheme] = useDarkMode();
     const handleMode = () => setDarkTheme(!darkTheme);
+    const [refetch, setRefetch] = useState(false)
 
     useEffect(() => {
         const fetchLatestData = async () => {
             try {
                 const latestData = await productService.getLatestProductData();
                 console.log('Latest data:', latestData);
-                setProductName1(latestData.prod1?.prodName);
-                setProductName2(latestData.prod2?.prodName);
-                setProductId1(latestData.prod1?.prodId);
-                setProductId2(latestData.prod2?.prodId);
-                setNotifications1(latestData.prod1?.notifications);
-                setNotifications2(latestData.prod2?.notifications);
-                setDeviations1(latestData.prod1?.deviations);
-                setDeviations2(latestData.prod2?.deviations);
-                console.log(latestData.prod1?.prodName)
-                console.log(productName1)
+                if (latestData.prod1) {
+                    setProductName1(latestData.prod1?.prodName);
+                    setNotifications1(latestData.prod1?.notifications);
+                    setProductId1(latestData.prod1?.prodId);
+                    setDeviations1(latestData.prod1?.weightLossDuringCooking);
+                }
+                if (latestData.prod2) {
+                    setProductName2(latestData.prod2?.prodName);
+                    setNotifications2(latestData.prod2?.notifications);
+                    setProductId2(latestData.prod2?.prodId);
+                    setDeviations2(latestData.prod2?.weightLossDuringCooking);
+          
+                }
+                
                 // console.log(productName1, productId1, notifications1, deviations1, 'okok');
             } catch (error) {
                 console.error("Failed to load notifications:", error);
             }
         };
         fetchLatestData();
-    }, []);
+    }, [refetch]);
 
     
     useEffect(() => {
@@ -51,6 +56,8 @@ const Preproduction = () => {
 
         // Listen for real-time data from the server
         socket.on('newProduct', (data) => {
+            setRefetch(!refetch)
+
             console.log('Received real-time data:', data);
             console.log('Product ID:', data.prodId);
             console.log('Product ID 1:', productId1);

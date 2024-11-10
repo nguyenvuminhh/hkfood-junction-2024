@@ -49,7 +49,7 @@ const CommunicationChannel = () => {
         if (newMessage.trim() && source.trim()) {
             const message = await messageService.postMessage( source, newMessage );
             setNewMessage('');
-            setSource('1'); // Reset to default value
+            //setSource('1'); // Reset to default value
         }
     };
 

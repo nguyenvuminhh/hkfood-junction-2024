@@ -38,7 +38,7 @@ const ProgressBar = () => {
                             progress === phase.id ? 'font-semibold' : ''
                         } ${getBackgroundColor(phase.id)}`}
                     >
-                        <div className={`flex justify-center items-center ${progress === phase.id ? 'text-black' : 'text-gray-400'}`}>
+                        <div className={`flex justify-center items-center ${progress === phase.id ? 'text-black font-bold' : 'text-black'}`}>
                             {phase.label}
                         </div>
                     </div>
