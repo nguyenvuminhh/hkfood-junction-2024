@@ -44,7 +44,7 @@ const Storage = () => {
             }
         };
         fetchLatestData();
-    }, []);
+    }, [refetch]);
 
     
     useEffect(() => {

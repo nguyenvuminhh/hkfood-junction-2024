@@ -88,7 +88,7 @@ function Stage3() {
               </div>
               <div className = "ml-4 mr-4">
                 <label htmlFor="batchDate" className="block mb-2 text-sm font-medium text-[#232d42] dark:text-white">
-                  Batch Date
+                  Production Date
                 </label>
                 <input
                   type="date"
