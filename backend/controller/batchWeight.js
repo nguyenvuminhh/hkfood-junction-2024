@@ -1,4 +1,3 @@
-const axios = require('axios')
 const BatchWeight = require('../models/batchWeight')
 const Product = require('../models/product')
 const Notification = require('../models/notification')
