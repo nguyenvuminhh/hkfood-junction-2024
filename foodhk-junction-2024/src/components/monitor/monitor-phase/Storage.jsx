@@ -21,19 +21,24 @@ const Storage = () => {
     const notification = useSelector((state) => state.selectedNotification);
     const [darkTheme, setDarkTheme] = useDarkMode();
     const handleMode = () => setDarkTheme(!darkTheme);
+    const [refetch, setRefetch] = useState(false)
 
     useEffect(() => {
         const fetchLatestData = async () => {
             try {
                 const latestData = await productService.getLatestProductData();
-                setProductName1(latestData.prod1?.prodName);
-                setProductName2(latestData.prod2?.prodName);
-                setProductId1(latestData.prod1?.prodId);
-                setProductId2(latestData.prod2?.prodId);
-                setNotifications1(latestData.prod1?.notifications);
-                setNotifications2(latestData.prod2?.notifications);
-                setDeviations1(latestData.prod1?.storageWeightLossDeviations);
-                setDeviations2(latestData.prod2?.storageWeightLossDeviations);
+                if (latestData.prod1) {
+                    setProductName1(latestData.prod1?.prodName);
+                    setNotifications1(latestData.prod1?.notifications);
+                    setProductId1(latestData.prod1?.prodId);
+                    setDeviations1(latestData.prod1?.storageWeightLossDeviations)
+                }
+                if (latestData.prod2) {
+                    setProductName2(latestData.prod2?.prodName);
+                    setNotifications2(latestData.prod2?.notifications);
+                    setProductId2(latestData.prod2?.prodId);
+                    setDeviations2(latestData.prod2?.storageWeightLossDeviations);
+                }
             } catch (error) {
                 console.error("Failed to load notifications:", error);
             }
@@ -47,6 +52,8 @@ const Storage = () => {
 
         // Listen for real-time data from the server
         socket.on('newProduct', (data) => {
+            setRefetch(!refetch)
+
             console.log('Received real-time data:', data);
             console.log("1111111111", data.prodId, productId1, productId1 == data.prodId)
             if (data.prodId === productId1) {

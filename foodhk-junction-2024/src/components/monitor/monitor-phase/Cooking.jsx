@@ -26,31 +26,40 @@ const Cooking = () => {
     const [darkTheme, setDarkTheme] = useDarkMode();
     const handleMode = () => setDarkTheme(!darkTheme);
 
+    const [refetch, setRefetch] = useState(false)
+
     useEffect(() => {
         const fetchLatestData = async () => {
             try {
                 console.log(11111)
                 const latestData = await productService.getLatestProductData();
                 console.log(1111, latestData)
-                setProductName1(latestData.prod1?.prodName);
-                setProductName2(latestData.prod2?.prodName);
-                setNotifications1(latestData.prod1?.notifications);
-                setNotifications2(latestData.prod2?.notifications);
-                setProductId1(latestData.prod1?.prodId);
-                setProductId2(latestData.prod2?.prodId);
-                setDeviations1(latestData.prod1?.weightLossDuringCooking);
-                setDeviations2(latestData.prod2?.weightLossDuringCooking);
-                setUpperBound1(latestData.prod1?.upperCookingLossBound)
-                setLowerBound1(latestData.prod1?.lowerCookingLossBound)
-                setUpperBound2(latestData.prod2?.upperCookingLossBound)
-                setLowerBound2(latestData.prod2?.lowerCookingLossBound)
+                console.log(1111, latestData.prod1)
+                console.log(1111, latestData.prod1.prodId)
+                if (latestData.prod1) {
+                    console.log("prod 1 exist")
+                    setProductName1(latestData.prod1?.prodName);
+                    setNotifications1(latestData.prod1?.notifications);
+                    setProductId1(latestData.prod1?.prodId);
+                    setDeviations1(latestData.prod1?.weightLossDuringCooking);
+                    setUpperBound1(latestData.prod1?.upperCookingLossBound)
+                    setLowerBound1(latestData.prod1?.lowerCookingLossBound)
+                }
+                if (latestData.prod2) {
+                    setProductName2(latestData.prod2?.prodName);
+                    setNotifications2(latestData.prod2?.notifications);
+                    setProductId2(latestData.prod2?.prodId);
+                    setDeviations2(latestData.prod2?.weightLossDuringCooking);
+                    setUpperBound2(latestData.prod2?.upperCookingLossBound)
+                    setLowerBound2(latestData.prod2?.lowerCookingLossBound)
+                }
             } catch (error) {
                 console.error("Failed to load notifications:", error);
             }
         };
         console.log(22222)
         fetchLatestData();
-    }, []);
+    }, [refetch]);
 
     
     useEffect(() => {
@@ -58,6 +67,7 @@ const Cooking = () => {
 
         // Listen for real-time data from the server
         socket.on('newProduct', (data) => {
+            setRefetch(!refetch)
             console.log('Received real-time data:', data);
             console.log(data.prodId, productId1, 'yapppp')
             if (data.prodId === productId1) {
