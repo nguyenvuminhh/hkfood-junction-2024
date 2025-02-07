@@ -1,5 +1,7 @@
 # FLOW (Food Loss Optimization Workflow)
 
+## Working instance at https://hk-food-junction-2024.vercel.app/
+
 ## Problem, Real-world Impact and Solution
 
 - In HKFoods’ production environment, efficient communication and quality control are challenging due to segmented workspaces, language diversity among staff, and strict hygiene restrictions that limit physical movement between areas. This leads to quality inconsistencies, such as underweight or overweight products, that impact both profitability and sustainability. Ensuring accurate weights and high standards in every product is crucial to HKFoods’s commitment to quality and waste reduction. 
